@@ -5,3 +5,7 @@ if ActiveRecord::Migrator.needs_migration?
 end
 
 run ApplicationController
+# if you add controllers, add them here
+use UsersController
+use SessionsController
+use DogsController
