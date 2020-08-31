@@ -1,13 +1,13 @@
 class DogsController < ApplicationController
 
   # GET: /dogs -> index
-  get "/dogs" do
+  get "/" do
     @dogs = Dog.all
     erb :"/dogs/index.html"
   end
 
   # GET: /dogs/new -> new
-  get "/dogs/new" do
+  get "/new" do
     redirect_if_not_logged_in
     @dog = Dog.new
     erb :"/dogs/new.html"
@@ -18,20 +18,20 @@ class DogsController < ApplicationController
     redirect_if_not_logged_in
     @dog = current_user.dogs.build(name: params[:dog][:name], age: params[:dog][:age], breed: params[:dog][:breed])
     if @dog.save
-      redirect "/dogs"
+      redirect "/"
     else
       erb :"/dogs/new.html"
     end
   end
 
   # GET: /dogs/5 -> show
-  get "/dogs/:id" do
+  get "/:id" do
     set_dog
     erb :"/dogs/show.html"
   end
 
   # GET: /dogs/5/edit -> edit
-  get "/dogs/:id/edit" do
+  get "/:id/edit" do
     set_dog
     redirect_if_not_authorized
     erb :"/dogs/edit.html"
@@ -62,7 +62,7 @@ class DogsController < ApplicationController
   def set_dog
     @dog = Dog.find_by_id(params[:id])
     if @dog.nil?
-      flash[:error] = "Couldn't find a Dog with id: #{params[:id]}"
+      #flash[:error] = "Couldn't find a Dog with id: #{params[:id]}"
       redirect "/dogs"
     end
   end
